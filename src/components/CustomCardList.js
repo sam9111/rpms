@@ -2,21 +2,21 @@ import { Container, ListGroup, Card, Button, Badge, ButtonGroup } from 'react-bo
 
 function CustomCard(props) {
     console.log(props.pub);
-    if (props.pub.Domains == null) {
+    if (props.pub.domains == null) {
         var badges = <div></div>;
     }
     else {
-        badges = props.pub.Domains.map((field) =>
+        badges = props.pub.domains.map((field) =>
             <Badge style={{ margin: '5px' }}>#{field}</Badge>
         );
     }
 
     const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    if (props.pub.Date == null) {
+    if (props.pub.date == null) {
         var date = "";
     }
     else {
-        var parsedDate = new Date(props.pub.Date);
+        var parsedDate = new Date(props.pub.date);
         date = "Published on " + parsedDate.getDate() + " " + month[parsedDate.getMonth()] + " " + parsedDate.getFullYear();
     }
 
@@ -26,9 +26,9 @@ function CustomCard(props) {
                 {badges}
             </Card.Header>
             <Card.Body>
-                <Card.Title>{props.pub.Title}</Card.Title>
+                <Card.Title>{props.pub.title}</Card.Title>
                 <Card.Text>
-                    {props.pub.Content}
+                    {props.pub.content}
                 </Card.Text>
                 <ButtonGroup aria-label="Basic example" style={{ float: 'right' }}>
                     <a href={props.pub.url} target="_blank" rel="noopener noreferrer"><Button variant="secondary" style={{ marginRight: '2px' }}>View</Button></a>
