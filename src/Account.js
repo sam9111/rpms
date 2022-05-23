@@ -3,23 +3,21 @@ import { supabase } from "./supabaseClient";
 
 const Account = ({ session }) => {
   const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState(null);
-  const [website, setWebsite] = useState(null);
-  const [avatar_url, setAvatarUrl] = useState(null);
+  const [name, setName] = useState(null);
 
   useEffect(() => {
-    getProfile();
+    getUser();
   }, [session]);
 
-  const getProfile = async () => {
+  const getUser = async () => {
     try {
       setLoading(true);
       const user = supabase.auth.user();
 
       let { data, error, status } = await supabase
-        .from("profiles")
-        .select(`username, website, avatar_url`)
-        .eq("id", user.id)
+        .from("users")
+        .select(`name`)
+        .eq("uuid", user.id)
         .single();
 
       if (error && status !== 406) {
@@ -27,9 +25,7 @@ const Account = ({ session }) => {
       }
 
       if (data) {
-        setUsername(data.username);
-        setWebsite(data.website);
-        setAvatarUrl(data.avatar_url);
+        setName(data.name);
       }
     } catch (error) {
       alert(error.message);
@@ -38,7 +34,7 @@ const Account = ({ session }) => {
     }
   };
 
-  const updateProfile = async (e) => {
+  const updateUser = async (e) => {
     e.preventDefault();
 
     try {
@@ -46,14 +42,12 @@ const Account = ({ session }) => {
       const user = supabase.auth.user();
 
       const updates = {
-        id: user.id,
-        username,
-        website,
-        avatar_url,
+        uuid: user.id,
+        name,
         updated_at: new Date(),
       };
 
-      let { error } = await supabase.from("profiles").upsert(updates, {
+      let { error } = await supabase.from("users").upsert(updates, {
         returning: "minimal", // Don't return the value after inserting
       });
 
@@ -72,29 +66,21 @@ const Account = ({ session }) => {
       {loading ? (
         "Saving ..."
       ) : (
-        <form onSubmit={updateProfile} className="form-widget">
+        <form onSubmit={updateUser} className="form-widget">
           <div>Email: {session.user.email}</div>
           <div>
             <label htmlFor="username">Name</label>
             <input
               id="username"
               type="text"
-              value={username || ""}
-              onChange={(e) => setUsername(e.target.value)}
+              value={name || ""}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <div>
-            <label htmlFor="website">Website</label>
-            <input
-              id="website"
-              type="url"
-              value={website || ""}
-              onChange={(e) => setWebsite(e.target.value)}
-            />
-          </div>
+
           <div>
             <button className="button block primary" disabled={loading}>
-              Update profile
+              Update User
             </button>
           </div>
         </form>
