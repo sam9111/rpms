@@ -1,27 +1,29 @@
-import "./index.css";
-import { useState, useEffect } from "react";
-import { supabase } from "./supabaseClient";
-import Auth from "./Auth";
-import Account from "./Account";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+import { Home } from './pages/Home';
+import { Navigation } from './components/Navigation';
+import { Footer } from './components/Footer';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { SignIn } from './pages/SignIn';
+import {useState} from 'react';
 
-export default function App() {
-  const [session, setSession] = useState(null);
 
-  useEffect(() => {
-    setSession(supabase.auth.session());
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
+function App() {
+  const [user,setUser] = useState(null);
 
   return (
-    <>
-      {!session ? (
-        <Auth />
-      ) : (
-        <Account key={session.user.id} session={session} />
-      )}
-    </>
+    <div className='App'>
+      <Router>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<Home user = {user}/>} />
+          <Route path="/explore" element={<Home/>} />
+          <Route path="/account" element = {<SignIn userHandler = {setUser}/>}/>
+        </Routes>
+        <Footer />
+      </Router>
+    </div>
   );
 }
+
+export default App;
