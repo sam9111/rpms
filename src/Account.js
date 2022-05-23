@@ -14,6 +14,8 @@ const Account = ({ session }) => {
       setLoading(true);
       const user = supabase.auth.user();
 
+      console.log(user);
+
       let { data, error, status } = await supabase
         .from("users")
         .select(`name`)
