@@ -40,7 +40,7 @@ export default function App() {
 
           <div className="min-h align-center justify-center p-4">
             <Routes>
-              <Route path="/" element={<Home user={session.user.id} />} />
+              <Route path="/" element={<Home user={session.user} />} />
               <Route path="/explore" element={<Home />} />
             </Routes>
           </div>

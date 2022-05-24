@@ -86,7 +86,7 @@ export default function Auth(props) {
                 to explore research publications.
               </Text>
             </Stack>
-            <Box rounded={"lg"} boxShadow={"2xl"} p={8}>
+            <Box rounded={"lg"} boxShadow={"xl"} p={8}>
               <Stack spacing={6}>
                 <FormControl id="email" isRequired>
                   <FormLabel>Email address</FormLabel>
@@ -161,7 +161,7 @@ export default function Auth(props) {
                 to create a new account on RPMS.
               </Text>
             </Stack>
-            <Box rounded={"lg"} boxShadow={"2xl"} p={8}>
+            <Box rounded={"lg"} boxShadow={"xl"} p={8}>
               <Stack spacing={6}>
                 <FormControl id="name" isRequired>
                   <FormLabel>Name</FormLabel>
