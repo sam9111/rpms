@@ -3,7 +3,6 @@ import { UploadForm } from "../components/UploadForm";
 import { CustomTable } from "../components/CustomTable";
 import { Container, Spinner, Row, Col } from "react-bootstrap";
 import { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 
 import { supabase } from "../supabaseClient";
 var publications = [

@@ -59,8 +59,6 @@
 
 import React from "react";
 import {
-  Flex,
-  useColorModeValue,
   ButtonGroup,
   Tag,
   IconButton,
@@ -69,7 +67,6 @@ import {
   Tr,
   Th,
   Td,
-  Heading,
   Tbody,
   Box,
 } from "@chakra-ui/react";
@@ -77,7 +74,7 @@ import { AiFillEdit } from "react-icons/ai";
 import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
 
 export function CustomTable(props) {
-  const { publications } = props;
+  const  publications  = props.publications;
   const header = [
     "ISSN",
     "title",
@@ -87,12 +84,6 @@ export function CustomTable(props) {
     "pages",
     "description",
     "actions",
-  ];
-  const data = [
-    { name: "Daggy", created: "7 days ago" },
-    { name: "Anubra", created: "23 hours ago" },
-    { name: "Josef", created: "A few seconds ago" },
-    { name: "Sage", created: "A few hours ago" },
   ];
 
   return (
@@ -166,8 +157,8 @@ export function CustomTable(props) {
                 <Td>{pub.issn}</Td>
                 <Td>{pub.title}</Td>
                 <Td>{pub.author}</Td>
-                <Td>
-                  {pub.domains.map((dom) => (
+                <Td>  
+                  {(pub.domains == null)?<div></div>:pub.domains.map((dom) => (
                     <Tag>{dom}</Tag>
                   ))}
                 </Td>

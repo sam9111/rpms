@@ -12,24 +12,22 @@ import "./index.css";
 import { useEffect } from "react";
 import { supabase } from "./supabaseClient";
 import Auth from "./Auth";
-import Account from "./Account";
 
 export default function App() {
-  const [user, setUser] = useState(null);
 
   const [session, setSession] = useState(null);
 
   useEffect(() => {
     setSession(supabase.auth.session());
 
-    console.log("session", session);
+    //console.log("session", session);
 
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
   }, []);
 
-  console.log(session);
+  //console.log(session);
 
   return (
     <>

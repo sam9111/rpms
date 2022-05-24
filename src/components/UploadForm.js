@@ -1,6 +1,5 @@
-import { Col, Container, Row, Form } from "react-bootstrap";
+import { Col, Row, Form } from "react-bootstrap";
 import { FileUploader } from "react-drag-drop-files";
-import { createClient } from "@supabase/supabase-js";
 import { useState } from "react";
 import { Box, Button } from "@chakra-ui/react";
 
@@ -8,49 +7,43 @@ import { supabase } from "../supabaseClient";
 
 export function UploadForm(props) {
   const [file, setFile] = useState(null);
-  const [domains, setDomains] = useState([]);
 
   async function fileUpload(uploadedFile) {
     setFile(uploadedFile);
     console.log(file);
   }
 
-  function func(ev) {
-    if (ev.key === "Enter") {
-      ev.preventDefault();
-      var a = document.getElementById("form");
-      setDomains(domains.concat(a.area.value));
-      console.log(domains);
-    }
-  }
-
   async function handleSubmit(event) {
-    console.log(event.target);
+    console.log(event.target.issn.value);
     event.preventDefault();
     var rightNow = new Date();
     var res = rightNow.toISOString().slice(0, 10);
-    const { dberror } = await supabase.from("publications").insert([
+    const { data, dberror } = await supabase.from('publications').insert([
       {
-        Title: event.target.title.value,
-        ISSN: event.target.issn.value,
-        Date: res,
-        Pages: parseInt(event.target.no_of_pages.value),
+        title: event.target.title.value,
+        issn: parseInt(event.target.issn.value),
+        date: res,
+        pages: parseInt(event.target.no_of_pages.value),
         user_id: props.user.id,
-        Content: event.target.content.value,
+        content: event.target.content.value,
       },
     ]);
+    console.log(data);
+    console.log(dberror);
     if (dberror) {
       alert(dberror.message);
     }
 
-    const { fileerror } = await supabase.storage
-      .from("publications")
-      .upload(event.target.issn.value, file);
-    if (fileerror) {
-      alert(fileerror.message);
+    if (file != null) {
+      const { fileerror } = await supabase.storage
+        .from("publications")
+        .upload(event.target.issn.value, file);
+      if (fileerror) {
+        alert(fileerror.message);
+      }
     }
 
-    if (!fileerror && !dberror) {
+    if (dberror) {
       alert("Success!!");
     }
 
@@ -89,7 +82,7 @@ export function UploadForm(props) {
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
                                 </Form.Select> */}
-                <Form.Control id="area" type="text" onKeyUp={func} />
+                <Form.Control id="area" type="text" />
               </Col>
             </Row>
             <Row style={{ marginTop: "20px" }}>
