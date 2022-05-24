@@ -4,6 +4,7 @@ import { CustomTable } from "../components/CustomTable";
 import { Container, Spinner, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
+import { Input, Flex, Box, Button, Heading } from "@chakra-ui/react";
 
 import { supabase } from "../supabaseClient";
 var publications = [
@@ -73,9 +74,12 @@ export function DashboardPage(props) {
   }
 
   return (
-    <>
+    <Box m={8}>
+      <Heading size="lg" my={4}>
+        Your Dashboard
+      </Heading>
       <UploadForm user={props.user} />
       <TablePlaceHolder />
-    </>
+    </Box>
   );
 }
