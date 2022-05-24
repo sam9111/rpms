@@ -37,7 +37,7 @@ export default function App() {
         <Router>
           <Navigation />
 
-          <div className="min-h align-center justify-center p-4">
+          <div className="min-h align-center justify-center p-4 mx-auto">
             <Routes>
               <Route path="/" element={<DashboardPage user={session.user} />} />
               <Route path="/explore" element={<ExplorePage />} />
