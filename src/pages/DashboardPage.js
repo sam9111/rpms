@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { UploadForm } from "../components/UploadForm";
-import { CustomCardList } from "../components/CustomCardList";
+import { CustomTable } from "../components/CustomTable";
 import { Container, Spinner, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
@@ -33,7 +33,7 @@ var publications = [
   },
 ];
 
-export function Home(props) {
+export function DashboardPage(props) {
   const [loaded, setLoaded] = useState(false);
 
   const getPubs = async () => {
@@ -52,7 +52,7 @@ export function Home(props) {
     setLoaded(true);
   };
 
-  function CardListPlaceHolder() {
+  function TablePlaceHolder() {
     if (!loaded) {
       getPubs();
       return (
@@ -68,14 +68,14 @@ export function Home(props) {
         </Container>
       );
     } else {
-      return <CustomCardList publications={publications.data} />;
+      return <CustomTable publications={publications.data} />;
     }
   }
 
   return (
     <>
       <UploadForm user={props.user} />
-      <CardListPlaceHolder />
+      <TablePlaceHolder />
     </>
   );
 }

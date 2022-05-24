@@ -1,9 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { Home } from "./pages/Home";
+import { DashboardPage } from "./pages/DashboardPage";
 import Navigation from "./components/Navigation";
 import { Footer } from "./components/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ExplorePage from "./pages/ExplorePage";
 
 import { useState } from "react";
 
@@ -40,8 +41,8 @@ export default function App() {
 
           <div className="min-h align-center justify-center p-4">
             <Routes>
-              <Route path="/" element={<Home user={session.user} />} />
-              <Route path="/explore" element={<Home />} />
+              <Route path="/" element={<DashboardPage user={session.user} />} />
+              <Route path="/explore" element={<ExplorePage />} />
             </Routes>
           </div>
           <Footer />

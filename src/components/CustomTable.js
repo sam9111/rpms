@@ -76,7 +76,7 @@ import {
 import { AiFillEdit } from "react-icons/ai";
 import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
 
-export function CustomCardList(props) {
+export function CustomTable(props) {
   const { publications } = props;
   const header = [
     "ISSN",
