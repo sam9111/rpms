@@ -168,10 +168,12 @@ export function CustomTable(props) {
 
                 <Td>
                   <ButtonGroup variant="solid" size="sm" spacing={3}>
+                    <a href = {pub.url} target="_blank" rel="noreferrer">
                     <IconButton
                       colorScheme="blue"
                       icon={<BsBoxArrowUpRight />}
                     />
+                    </a>
                     <IconButton colorScheme="green" icon={<AiFillEdit />} />
                     <IconButton
                       colorScheme="red"

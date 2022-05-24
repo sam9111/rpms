@@ -48,7 +48,7 @@ export function DashboardPage(props) {
       var pub = publications.data[i];
       const { publicURL } = supabase.storage
         .from("publications")
-        .getPublicUrl(pub.ISSN);
+        .getPublicUrl(pub.issn);
       publications.data[i].url = publicURL;
     }
     setLoaded(true);
