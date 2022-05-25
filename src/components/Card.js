@@ -1,19 +1,7 @@
 import { Flex, Box, Heading, Text, Tag, Badge, Stack } from "@chakra-ui/react";
 
 export default function Card(props) {
-  // const { publication } = props;
-
-  const publication = {
-    title: "The Complete Guide to React Hooks",
-    issn: "12345",
-    authors: ["Adam"],
-    domains: ["AI"],
-    date: "2013-15-23",
-    pages: "14",
-    content:
-      "The Complete Guide to React HooksThe Complete Guide to React HooksThe Complete Guide to React HooksThe Complete Guide to React HooksThe Complete Guide to React Hooks",
-    url: "https://www.google.com",
-  };
+  const { publication } = props;
 
   return (
     <Flex
