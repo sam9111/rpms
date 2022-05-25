@@ -27,7 +27,7 @@ export default function App() {
     });
   }, []);
 
-  //console.log(session);
+  console.log(session);
 
   return (
     <>

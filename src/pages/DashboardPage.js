@@ -37,7 +37,7 @@ var publications = [
 export function DashboardPage(props) {
   const [loaded, setLoaded] = useState(false);
 
-  const getPubs = async () => {
+  async function getPubs() {
     publications = await supabase
       .from("publications")
       .select()
@@ -74,6 +74,7 @@ export function DashboardPage(props) {
   }
 
   return (
+
     <Box m={8}>
       <Heading size="lg" my={4}>
         Your Dashboard

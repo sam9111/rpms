@@ -70,11 +70,11 @@ import {
   Tbody,
   Box,
 } from "@chakra-ui/react";
-import { AiFillEdit } from "react-icons/ai";
-import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
+import { BsBoxArrowUpRight } from "react-icons/bs";
+import { DeleteIconButton, UpdateIconButton } from "./EditForm";
 
 export function CustomTable(props) {
-  const  publications  = props.publications;
+  const publications = props.publications;
   const header = [
     "ISSN",
     "title",
@@ -157,8 +157,8 @@ export function CustomTable(props) {
                 <Td>{pub.issn}</Td>
                 <Td>{pub.title}</Td>
                 <Td>{pub.author}</Td>
-                <Td>  
-                  {(pub.domains == null)?<div></div>:pub.domains.map((dom) => (
+                <Td>
+                  {(pub.domains == null) ? <div></div> : pub.domains.map((dom) => (
                     <Tag>{dom}</Tag>
                   ))}
                 </Td>
@@ -168,18 +168,14 @@ export function CustomTable(props) {
 
                 <Td>
                   <ButtonGroup variant="solid" size="sm" spacing={3}>
-                    <a href = {pub.url} target="_blank" rel="noreferrer">
-                    <IconButton
-                      colorScheme="blue"
-                      icon={<BsBoxArrowUpRight />}
-                    />
+                    <a href={pub.url} target="_blank" rel="noreferrer">
+                      <IconButton
+                        colorScheme="blue"
+                        icon={<BsBoxArrowUpRight />}
+                      />
                     </a>
-                    <IconButton colorScheme="green" icon={<AiFillEdit />} />
-                    <IconButton
-                      colorScheme="red"
-                      variant="outline"
-                      icon={<BsFillTrashFill />}
-                    />
+                    <UpdateIconButton publication = {pub} />
+                    <DeleteIconButton publication = {pub}/>
                   </ButtonGroup>
                 </Td>
               </Tr>
