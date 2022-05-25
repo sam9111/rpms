@@ -1,6 +1,6 @@
 import { supabase } from "../supabaseClient";
 import Card from "../components/Card";
-import { Input, Flex, Box, Button, Heading } from "@chakra-ui/react";
+import { Input, Box, Button, Heading } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 
 export default function ExplorePage(props) {

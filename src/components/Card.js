@@ -47,6 +47,7 @@ export default function Card(props) {
       </Stack>
       <Box mx="auto">
         <iframe
+          title = "pdf"
           src="https://research.google.com/pubs/archive/44678.pdf"
           width="400px"
           height="400px"
