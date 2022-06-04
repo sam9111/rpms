@@ -46,6 +46,11 @@ export default function Navigation() {
                   {link.name}
                 </NavLink>
               ))}
+              {supabase.auth.user().user_metadata.role === "ADMIN" ? (
+                <NavLink to="/admin">Admin</NavLink>
+              ) : (
+                <></>
+              )}
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>

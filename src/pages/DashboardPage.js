@@ -5,7 +5,6 @@ import { Container, Spinner, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { Box, Heading } from "@chakra-ui/react";
 
-
 import { supabase } from "../supabaseClient";
 var publications = [
   {
@@ -51,7 +50,7 @@ export function DashboardPage(props) {
       publications.data[i].url = publicURL;
     }
     setLoaded(true);
-  };
+  }
 
   function TablePlaceHolder() {
     if (!loaded) {
@@ -69,12 +68,25 @@ export function DashboardPage(props) {
         </Container>
       );
     } else {
-      return <CustomTable publications={publications.data} />;
+      return (
+        <>
+          {" "}
+          <h1
+            style={{
+              paddingBottom: "5px",
+              fontWeight: "bold",
+              fontSize: "20px",
+            }}
+          >
+            Your Publications
+          </h1>
+          <CustomTable publications={publications.data} />
+        </>
+      );
     }
   }
 
   return (
-
     <Box m={8}>
       <Heading size="lg" my={4}>
         Your Dashboard

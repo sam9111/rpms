@@ -4,6 +4,8 @@ import Card from "../components/Card";
 import { Input, Box, Button, Heading } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 
+import Search from "../components/Search";
+
 export default function ExplorePage(props) {
   const [publications, setPublications] = useState([]);
 
@@ -55,15 +57,7 @@ export default function ExplorePage(props) {
       <Heading size="lg" my={4}>
         Explore Research Publications
       </Heading>
-      <Input
-        placeholder="Search for any publication"
-        width="25%"
-        my={4}
-        id="search"
-      />
-      <Button mx={2} onClick={handleSearch}>
-        <Search2Icon />
-      </Button>
+      <Search attribute="title" setPublications={setPublications} />
       {publications.map((pub) => {
         return <Card publication={pub} key={pub.issn} />;
       })}
