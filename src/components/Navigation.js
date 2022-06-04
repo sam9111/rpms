@@ -11,6 +11,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { NavLink, Link } from "react-router-dom";
+import { supabase } from "../supabaseClient";
 
 const LINKS = [
   { name: "Dashboard", link: "/" },
@@ -18,7 +19,9 @@ const LINKS = [
 ];
 
 export default function Navigation() {
-
+  async function handleSignOut() {
+    await supabase.auth.signOut();
+  }
   return (
     <>
       <Box bg={"blue.400"} px={8}>
@@ -60,7 +63,7 @@ export default function Navigation() {
                 <MenuItem>
                   <Link to="/profile">Profile</Link>
                 </MenuItem>
-                <MenuItem>Sign Out</MenuItem>
+                <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
               </MenuList>
             </Menu>
           </Flex>
