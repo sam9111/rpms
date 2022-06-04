@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation";
 import { Footer } from "./components/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ExplorePage from "./pages/ExplorePage";
+import AdminPage from "./pages/AdminPage";
 
 import { useState } from "react";
 
@@ -14,7 +15,6 @@ import { supabase } from "./supabaseClient";
 import Auth from "./Auth";
 
 export default function App() {
-
   const [session, setSession] = useState(null);
 
   useEffect(() => {
@@ -41,6 +41,11 @@ export default function App() {
             <Routes>
               <Route path="/" element={<DashboardPage user={session.user} />} />
               <Route path="/explore" element={<ExplorePage />} />
+              {supabase.auth.user().user_metadata.role === "ADMIN" ? (
+                <Route path="/admin" element={<AdminPage />} />
+              ) : (
+                <></>
+              )}
             </Routes>
           </div>
           <Footer />

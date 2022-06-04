@@ -158,9 +158,11 @@ export function CustomTable(props) {
                 <Td>{pub.title}</Td>
                 <Td>{pub.author}</Td>
                 <Td>
-                  {(pub.domains == null) ? <div></div> : pub.domains.map((dom) => (
-                    <Tag>{dom}</Tag>
-                  ))}
+                  {pub.domains == null ? (
+                    <div></div>
+                  ) : (
+                    pub.domains.map((dom) => <Tag>{dom}</Tag>)
+                  )}
                 </Td>
                 <Td>{pub.date}</Td>
                 <Td>{pub.pages}</Td>
@@ -174,8 +176,8 @@ export function CustomTable(props) {
                         icon={<BsBoxArrowUpRight />}
                       />
                     </a>
-                    <UpdateIconButton publication = {pub} />
-                    <DeleteIconButton publication = {pub}/>
+                    <UpdateIconButton publication={pub} />
+                    <DeleteIconButton publication={pub} />
                   </ButtonGroup>
                 </Td>
               </Tr>
