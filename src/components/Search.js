@@ -1,26 +1,21 @@
 import { supabase } from "../supabaseClient";
 import { Input, Box, Button, Heading } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
+import { useState } from "react";
 
 export default function Search(props) {
   const { attribute, setPublications } = props;
+
+  const [query, setQuery] = useState("");
   async function handleSearch() {
-    var query = document.getElementById("search").value;
     var finalData = [];
 
-    const contents = await supabase
-      .from("publications")
-      .select()
-      .textSearch("content", query);
-
-    finalData = finalData.concat(contents.data);
-
-    const titles = await supabase
+    const results = await supabase
       .from("publications")
       .select()
       .textSearch(attribute, query);
 
-    finalData = finalData.concat(titles.data);
+    finalData = results.data;
 
     for (var i = 0; i < finalData.length; i += 1) {
       const { publicURL } = supabase.storage
@@ -32,16 +27,11 @@ export default function Search(props) {
   }
 
   return (
-    <>
-      <Input
-        placeholder="Search for any publication"
-        width="25%"
-        my={4}
-        id="search"
-      />
+    <Box>
+      <Input width="25%" my={4} onChange={(e) => setQuery(e.target.value)} />
       <Button mx={2} onClick={handleSearch}>
         <Search2Icon />
       </Button>
-    </>
+    </Box>
   );
 }
