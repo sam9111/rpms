@@ -28,7 +28,7 @@ export default function Search(props) {
 
   return (
     <Box>
-      <Input width="25%" my={4} onChange={(e) => setQuery(e.target.value)} />
+      <Input width="25%" my={2} onChange={(e) => setQuery(e.target.value)} />
       <Button mx={2} onClick={handleSearch}>
         <Search2Icon />
       </Button>

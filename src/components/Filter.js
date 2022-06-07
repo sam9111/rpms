@@ -20,7 +20,6 @@ export default function Filter(props) {
           )
         );
       }}
-      defaultValue={DOMAINS}
     >
       <HStack>
         {DOMAINS.map((domain) => (

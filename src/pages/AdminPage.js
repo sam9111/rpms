@@ -22,6 +22,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import Filter from "../components/Filter";
 import Search from "../components/Search";
+import BarChart from "../components/BarChart";
+import PieChart from "../components/PieChart";
 export default function AdminPage(props) {
   const [publications, setPublications] = useState([]);
   const [yearFrom, setyearFrom] = useState(0);
@@ -50,7 +52,19 @@ export default function AdminPage(props) {
       <Heading size="lg" my={4}>
         Admin Dashboard
       </Heading>
-      <Stack spacing={4} my={4}>
+      <Box my={8}>
+        <Text fontWeight="bold" fontSize="xl">
+          Metrics
+        </Text>
+        <HStack p={4}>
+          <BarChart publications={publications} />
+          <PieChart publications={publications} />
+        </HStack>
+      </Box>
+      <Stack spacing={4} py={4}>
+        <Text fontWeight="bold" fontSize="xl">
+          Indexing
+        </Text>
         <Text fontWeight="bold">Title Search</Text>
         <Search attribute="title" setPublications={setPublications} />
         <Text fontWeight="bold">Author Search</Text>
@@ -65,8 +79,7 @@ export default function AdminPage(props) {
           <NumberInput
             keepWithinRange
             onChange={(value) => setyearFrom([value])}
-            min={2019}
-            defaultValue={2019}
+            min={2010}
           >
             <NumberInputField />
             <NumberInputStepper>
@@ -88,11 +101,6 @@ export default function AdminPage(props) {
           </NumberInput>
           <Button
             p={4}
-            bg={"blue.400"}
-            color={"white"}
-            _hover={{
-              bg: "blue.500",
-            }}
             onClick={() =>
               setPublications(
                 publications.filter((pub) => {
