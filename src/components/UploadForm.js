@@ -14,11 +14,10 @@ export function UploadForm(props) {
   }
 
   async function handleSubmit(event) {
-    console.log(event.target.issn.value);
     event.preventDefault();
     var rightNow = new Date();
     var res = rightNow.toISOString().slice(0, 10);
-    const { data, dberror } = await supabase.from("publications").insert([
+    var inputData = [
       {
         title: event.target.title.value,
         issn: parseInt(event.target.issn.value),
@@ -27,9 +26,10 @@ export function UploadForm(props) {
         user_id: props.user.id,
         content: event.target.content.value,
       },
-    ]);
-    console.log(data);
-    console.log(dberror);
+    ]
+
+    //Insert into Supabase
+    const { dberror } = await supabase.from("publications").insert(inputData);
     if (dberror) {
       alert(dberror.message);
     }
@@ -43,9 +43,18 @@ export function UploadForm(props) {
       }
     }
 
-    if (dberror) {
-      alert("Success!!");
-    }
+    //Insert into MongoDB
+    await fetch("http://localhost:5000/record/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(inputData),
+    })
+      .catch(error => {
+        console.log(error);
+        return;
+      });
 
     for (var i = 0; i < event.target.length; i += 1) {
       event.target[i].value = "";

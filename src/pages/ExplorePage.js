@@ -12,13 +12,17 @@ export default function ExplorePage(props) {
   async function getPubs() {
     var response = await supabase.from("publications").select("*");
 
-    response.body.map((pub) => {
+    const response2 = await fetch(`http://localhost:5000/record/`);
+    const jsonResponse = await response2.json();
+
+    jsonResponse.map((pub) => {
       const { publicURL } = supabase.storage
         .from("publications")
         .getPublicUrl(pub.issn);
       pub.url = publicURL;
     });
-    setPublications(response.body);
+
+    setPublications(jsonResponse);
   }
 
   useEffect(() => {
