@@ -9,7 +9,8 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
-
+import React, { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 import {
   NumberInput,
   NumberInputField,
@@ -19,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 
 import { CustomTable } from "../components/CustomTable";
+import { Report } from "../components/Report";
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import Filter from "../components/Filter";
@@ -49,20 +51,31 @@ export default function AdminPage(props) {
     getPubs();
   }, []);
 
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  const Report = React.forwardRef((props, ref) => {
+    const { publications } = props;
+    return (
+      <div ref={ref}>
+        <Box my={8}>
+          <HStack>
+            <BarChart publications={publications} />
+            <PieChart publications={publications} />
+          </HStack>
+          <CustomTable publications={publications} />
+        </Box>
+      </div>
+    );
+  });
   return (
     <Box m={8}>
       <Heading size="lg" my={4}>
         Admin Dashboard
       </Heading>
-      <Box my={8}>
-        <Text fontWeight="bold" fontSize="xl">
-          Metrics
-        </Text>
-        <HStack p={4}>
-          <BarChart publications={publications} />
-          <PieChart publications={publications} />
-        </HStack>
-      </Box>
+
       <Stack spacing={4} py={4}>
         <Text fontWeight="bold" fontSize="xl">
           Indexing
@@ -119,7 +132,15 @@ export default function AdminPage(props) {
         <Text fontWeight="bold">Sorting by Date</Text>
         <Sort setPublications={setPublications} publications={publications} />
       </Stack>
-      <CustomTable publications={publications} />
+      <hr className="my-4" />
+
+      <Button onClick={handlePrint} my={4}>
+        Generate Report
+      </Button>
+      <Text fontWeight="bold" fontSize="xl">
+        Metrics
+      </Text>
+      <Report ref={componentRef} publications={publications} />
     </Box>
   );
 }

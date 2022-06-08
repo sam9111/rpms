@@ -73,7 +73,7 @@ export default function BarChart(props) {
     ],
   };
   return (
-    <Box w="50%" mx="auto">
+    <Box w="40%">
       {" "}
       <Bar options={options} data={data} />
     </Box>

@@ -69,7 +69,7 @@ export default function PieChart(props) {
     ],
   };
   return (
-    <Box w="25%" mx="auto">
+    <Box w="30%">
       {" "}
       <Pie data={data} options={options} />
     </Box>
