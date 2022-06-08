@@ -18,7 +18,7 @@ export function UploadForm(props) {
     event.preventDefault();
     var rightNow = new Date();
     var res = rightNow.toISOString().slice(0, 10);
-    const { data, dberror } = await supabase.from('publications').insert([
+    const { data, dberror } = await supabase.from("publications").insert([
       {
         title: event.target.title.value,
         issn: parseInt(event.target.issn.value),

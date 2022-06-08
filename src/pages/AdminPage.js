@@ -9,6 +9,7 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
+
 import {
   NumberInput,
   NumberInputField,
@@ -24,6 +25,7 @@ import Filter from "../components/Filter";
 import Search from "../components/Search";
 import BarChart from "../components/BarChart";
 import PieChart from "../components/PieChart";
+import Sort from "../components/Sort";
 export default function AdminPage(props) {
   const [publications, setPublications] = useState([]);
   const [yearFrom, setyearFrom] = useState(0);
@@ -101,7 +103,7 @@ export default function AdminPage(props) {
           </NumberInput>
           <Button
             p={4}
-            onClick={() =>
+            onClick={(_) =>
               setPublications(
                 publications.filter((pub) => {
                   var date = new Date(pub.date);
@@ -114,6 +116,8 @@ export default function AdminPage(props) {
             Filter
           </Button>
         </Flex>
+        <Text fontWeight="bold">Sorting by Date</Text>
+        <Sort setPublications={setPublications} publications={publications} />
       </Stack>
       <CustomTable publications={publications} />
     </Box>
