@@ -56,20 +56,6 @@ export default function AdminPage(props) {
     content: () => componentRef.current,
   });
 
-  const Report = React.forwardRef((props, ref) => {
-    const { publications } = props;
-    return (
-      <div ref={ref}>
-        <Box my={8}>
-          <HStack>
-            <BarChart publications={publications} />
-            <PieChart publications={publications} />
-          </HStack>
-          <CustomTable publications={publications} />
-        </Box>
-      </div>
-    );
-  });
   return (
     <Box m={8}>
       <Heading size="lg" my={4}>
@@ -140,7 +126,15 @@ export default function AdminPage(props) {
       <Text fontWeight="bold" fontSize="xl">
         Metrics
       </Text>
-      <Report ref={componentRef} publications={publications} />
+      <div ref={componentRef}>
+        <Box my={8}>
+          <HStack>
+            <BarChart publications={publications} />
+            <PieChart publications={publications} />
+          </HStack>
+          <CustomTable publications={publications} />
+        </Box>
+      </div>
     </Box>
   );
 }

@@ -56,11 +56,12 @@ export default function PieChart(props) {
         data: DOMAINS.map((dom) => {
           var count = 0;
           publications.forEach((p) => {
-            p.domains.forEach((d) => {
-              if (d === dom) {
-                count++;
-              }
-            });
+            p.domains &&
+              p.domains.forEach((d) => {
+                if (d === dom) {
+                  count++;
+                }
+              });
           });
           return count;
         }),

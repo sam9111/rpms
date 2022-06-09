@@ -16,7 +16,7 @@ export default function Filter(props) {
       onChange={(value) => {
         setPublications(
           publications.filter((pub) =>
-            value.every((d) => pub.domains.includes(d))
+            value.every((d) => pub.domains && pub.domains.includes(d))
           )
         );
       }}

@@ -4,17 +4,19 @@ import { useState } from "react";
 import { Box, Button } from "@chakra-ui/react";
 
 import { supabase } from "../supabaseClient";
+import moment from "moment";
+
+import { read } from "xlsx";
+import { utils } from "xlsx";
 
 export function UploadForm(props) {
   const [file, setFile] = useState(null);
 
   async function fileUpload(uploadedFile) {
     setFile(uploadedFile);
-    console.log(file);
   }
 
   async function handleSubmit(event) {
-    console.log(event.target.issn.value);
     event.preventDefault();
     var rightNow = new Date();
     var res = rightNow.toISOString().slice(0, 10);
@@ -28,8 +30,7 @@ export function UploadForm(props) {
         content: event.target.content.value,
       },
     ]);
-    console.log(data);
-    console.log(dberror);
+
     if (dberror) {
       alert(dberror.message);
     }
@@ -51,6 +52,45 @@ export function UploadForm(props) {
       event.target[i].value = "";
     }
   }
+
+  const readUploadFile = (e) => {
+    e.preventDefault();
+    if (e.target.files) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = e.target.result;
+        const workbook = read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const json = utils.sheet_to_json(worksheet, { raw: false });
+        console.log("json", json);
+        uploadMutliple(json);
+      };
+      reader.readAsArrayBuffer(e.target.files[0]);
+    }
+  };
+
+  const uploadMutliple = async (json) => {
+    const pubs = json.map((pub) => {
+      console.log("pub", pub);
+      var res = new Date(pub.date).toISOString().slice(0, 10);
+      return {
+        title: pub.title,
+        issn: parseInt(pub.issn),
+        date: res,
+        pages: parseInt(pub.pages),
+        user_id: props.user.id,
+        content: pub.content,
+        author: pub.author,
+        domains: pub.domains && pub.domains.split(","),
+      };
+    });
+    console.log("pubs", pubs);
+    const { data, dberror } = await supabase.from("publications").insert(pubs);
+    if (dberror) {
+      alert(dberror.message);
+    }
+  };
 
   return (
     <Box rounded={"lg"} boxShadow={"xl"} p={8} mb={8}>
@@ -114,17 +154,25 @@ export function UploadForm(props) {
         </Row>
         <br />
 
-        <Button
-          bg={"blue.400"}
-          color={"white"}
-          _hover={{
-            bg: "blue.500",
-          }}
-          type="submit"
-        >
-          Upload Work
-        </Button>
+        <Button type="submit">Upload Work</Button>
       </Form>
+      <Box my={4} py={4}>
+        <h1
+          style={{
+            paddingBottom: "20px",
+            fontWeight: "bold",
+            fontSize: "20px",
+          }}
+        >
+          Upload Excel File
+        </h1>
+        <input
+          type="file"
+          name="upload"
+          id="upload"
+          onChange={readUploadFile}
+        />
+      </Box>
     </Box>
   );
 }
