@@ -18,13 +18,16 @@ export function UploadForm(props) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    console.log(event.target.date.value);
     var rightNow = new Date();
     var res = rightNow.toISOString().slice(0, 10);
     const { data, dberror } = await supabase.from("publications").insert([
       {
         title: event.target.title.value,
+        domains: event.target.area.value.split(","),
+        author: event.target.author.value,
+        date: event.target.date.value,
         issn: parseInt(event.target.issn.value),
-        date: res,
         pages: parseInt(event.target.no_of_pages.value),
         user_id: props.user.id,
         content: event.target.content.value,
@@ -133,6 +136,14 @@ export function UploadForm(props) {
               <Col sm={6}>
                 <Form.Label htmlFor="no_of_pages">Number of Pages</Form.Label>
                 <Form.Control id="no_of_pages" type="text" />
+              </Col>
+              <Col sm={6}>
+                <Form.Label htmlFor="author">Author</Form.Label>
+                <Form.Control id="author" type="text" />
+              </Col>
+              <Col sm={6}>
+                <Form.Label htmlFor="date">Date</Form.Label>
+                <Form.Control id="date" type="date" />
               </Col>
             </Row>
             <br />
