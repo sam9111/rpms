@@ -7,6 +7,10 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  RangeSlider,
+  RangeSliderTrack,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
 } from "@chakra-ui/react";
 
 import {
@@ -41,6 +45,7 @@ export default function Indexing(props) {
     const { isOpen,onClose, setPublications,publications} =props;
   const [yearFrom, setyearFrom] = useState(0);
   const [yearTo, setyearTo] = useState(0);
+    const [impact,setImpact] = useState([0,0]);
     return (
       <Modal isOpen={isOpen} onClose={onClose} size="full">
         <ModalOverlay />
@@ -65,7 +70,7 @@ export default function Indexing(props) {
                 setPublications={setPublications}
                 publications={publications}
               />
-              <Text fontWeight="bold">Year Range</Text>
+              <Text fontWeight="bold">Filter by Year Range</Text>
               <Flex width="35%" gap={4}>
                 From
                 <NumberInput
@@ -106,6 +111,34 @@ export default function Indexing(props) {
                   Filter
                 </Button>
               </Flex>
+
+              <Text fontWeight="bold">Filter by Impact Factor</Text>
+              <Box width="50%">
+                <RangeSlider
+                  step={1}
+                  min={0}
+                  max={100}
+                  defaultValue={[0, 0]}
+                  onChangeEnd={(val) => setImpact(val)}
+                >
+                  <RangeSliderTrack>
+                    <RangeSliderFilledTrack />
+                  </RangeSliderTrack>
+                  <RangeSliderThumb index={0} />
+                  <RangeSliderThumb index={1} />
+                </RangeSlider>
+                <Flex width="35%" gap={4} my={4} align="center">
+                  <Text color="gray">
+                    Selected IF: {impact[0]} to {impact[1]}
+                  </Text>
+                  <Button p={4} onClick={(_) => setPublications(
+                      publications.filter((pub) => {
+                        return pub.impactFactor >= impact[0] && pub.impactFactor <= impact[1];
+                      }))}>
+                    Filter
+                  </Button>
+                </Flex>
+              </Box>
               <Text fontWeight="bold">Sorting by Date</Text>
               <Sort
                 setPublications={setPublications}
@@ -113,8 +146,6 @@ export default function Indexing(props) {
               />
             </Stack>
           </ModalBody>
-
-   
         </ModalContent>
       </Modal>
     );
