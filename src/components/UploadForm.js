@@ -31,6 +31,10 @@ export function UploadForm(props) {
         pages: parseInt(event.target.no_of_pages.value),
         user_id: props.user.id,
         content: event.target.content.value,
+        page_range: event.target.page_range.value,
+        issueno: parseInt(event.target.issueno.value),
+        volno: parseInt(event.target.volume.value),
+        impact: parseInt(event.target.impact.value),
       },
     ]);
 
@@ -159,6 +163,18 @@ export function UploadForm(props) {
             </Row>
           </Col>
           <Col>
+            <Form.Label>Page Range</Form.Label>
+            <Form.Control type="text" id="page_range" />
+
+            <Form.Label>Volume Number</Form.Label>
+            <Form.Control type="number" id="volno" />
+
+            <Form.Label>Issue Number</Form.Label>
+            <Form.Control type="number" id="issueno" />
+
+            <Form.Label>Impact Factor</Form.Label>
+            <Form.Control type="number" id="impact" />
+
             <Form.Label htmlFor="pdf">File Upload</Form.Label>
             <FileUploader handleChange={fileUpload} name="file" />
           </Col>
