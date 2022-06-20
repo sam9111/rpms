@@ -7,6 +7,7 @@ import {
   Text,
   Flex,
   HStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 import React, { useRef } from "react";
@@ -28,6 +29,9 @@ import Search from "../components/Search";
 import BarChart from "../components/BarChart";
 import PieChart from "../components/PieChart";
 import Sort from "../components/Sort";
+
+import Indexing from "../components/Indexing";
+
 export default function AdminPage(props) {
   const [publications, setPublications] = useState([]);
   const [yearFrom, setyearFrom] = useState(0);
@@ -56,73 +60,28 @@ export default function AdminPage(props) {
     content: () => componentRef.current,
   });
 
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box m={8}>
       <Heading size="lg" my={4}>
         Admin Dashboard
       </Heading>
 
-      <Stack spacing={4} py={4}>
-        <Text fontWeight="bold" fontSize="xl">
-          Indexing
-        </Text>
-        <Text fontWeight="bold">Title Search</Text>
-        <Search attribute="title" setPublications={setPublications} />
-        <Text fontWeight="bold">Author Search</Text>
-        <Search attribute="author" setPublications={setPublications} />
-        <Text fontWeight="bold">Keywords Search</Text>
-        <Search attribute="content" setPublications={setPublications} />
-        <Text fontWeight="bold">Filter by domains</Text>
-        <Filter setPublications={setPublications} publications={publications} />
-        <Text fontWeight="bold">Year Range</Text>
-        <Flex width="35%" gap={4}>
-          From
-          <NumberInput
-            keepWithinRange
-            onChange={(value) => setyearFrom([value])}
-            min={2010}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-          To
-          <NumberInput
-            onChange={(value) => {
-              setyearTo(value);
-            }}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-          <Button
-            p={4}
-            onClick={(_) =>
-              setPublications(
-                publications.filter((pub) => {
-                  var date = new Date(pub.date);
-                  var year = date.getFullYear();
-                  return year >= yearFrom && year <= yearTo;
-                })
-              )
-            }
-          >
-            Filter
-          </Button>
-        </Flex>
-        <Text fontWeight="bold">Sorting by Date</Text>
-        <Sort setPublications={setPublications} publications={publications} />
-      </Stack>
-      <hr className="my-4" />
-
-      <Button onClick={handlePrint} my={4}>
-        Generate Report
-      </Button>
+      <Box>
+        <Button onClick={onOpen}>
+          Advanced Search
+        </Button>
+        <Indexing
+          isOpen={isOpen}
+          onClose={onClose}
+          setPublications={setPublications}
+          publications={publications}
+        />
+        <Button onClick={handlePrint} m={4}>
+          Generate Report
+        </Button>
+      </Box>
       <Text fontWeight="bold" fontSize="xl">
         Metrics
       </Text>

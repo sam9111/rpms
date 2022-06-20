@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import Card from "../components/Card";
-import { Input, Box, Button, Heading } from "@chakra-ui/react";
+import { Input, Box, Button, Heading , useDisclosure, } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
-
+import Indexing from "../components/Indexing";
 import Search from "../components/Search";
 
 export default function ExplorePage(props) {
   const [publications, setPublications] = useState([]);
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
   async function getPubs() {
     var response = await supabase.from("publications").select("*");
@@ -30,7 +31,15 @@ export default function ExplorePage(props) {
       <Heading size="lg" my={4}>
         Explore Research Publications
       </Heading>
-      <Search attribute="title" setPublications={setPublications} />
+      <Button onClick={onOpen} m={4}>
+       Advanced Search
+      </Button>
+      <Indexing
+        isOpen={isOpen}
+        onClose={onClose}
+        setPublications={setPublications}
+        publications={publications}
+      />
       {publications.map((pub) => {
         return <Card publication={pub} key={pub.issn} />;
       })}
