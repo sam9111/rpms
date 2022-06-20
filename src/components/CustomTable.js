@@ -18,6 +18,7 @@ export function CustomTable(props) {
   const publications = props.publications;
   const header = [
     "ISSN",
+    "Impact Factor",
     "title",
     "author",
     "domains",
@@ -87,6 +88,7 @@ export function CustomTable(props) {
                 fontSize="md"
               >
                 <Td>{pub.issn}</Td>
+                <Td>{pub.impact_factor}</Td>
                 <Td>{pub.title}</Td>
                 <Td>{pub.author}</Td>
                 <Td>

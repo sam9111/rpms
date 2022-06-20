@@ -42,7 +42,7 @@ import { useEffect, useState } from "react";
 
 export default function Indexing(props) {
 
-    const { isOpen,onClose, setPublications,publications} =props;
+  const { isOpen,onClose, setPublications,publications} =props;
   const [yearFrom, setyearFrom] = useState(0);
   const [yearTo, setyearTo] = useState(0);
     const [impact,setImpact] = useState([0,0]);
@@ -133,7 +133,7 @@ export default function Indexing(props) {
                   </Text>
                   <Button p={4} onClick={(_) => setPublications(
                       publications.filter((pub) => {
-                        return pub.impactFactor >= impact[0] && pub.impactFactor <= impact[1];
+                        return pub.impact_factor >= impact[0] && pub.impact_factor <= impact[1];
                       }))}>
                     Filter
                   </Button>

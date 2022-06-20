@@ -12,10 +12,13 @@ export default function Card(props) {
       justify={"center"}
     >
       <Stack spacing={4}>
-        <div>
+        <Flex gap={4}>
           {" "}
           <Badge>ISSN: {publication.issn}</Badge>
-        </div>
+          <Badge>Volume: {publication.vol_no}</Badge>
+          <Badge>Issue: {publication.issue_no}</Badge>
+          <Badge>Impact Factor: {publication.impact_factor}</Badge>
+        </Flex>
         <Heading size="md">{publication.title}</Heading>
         <Box color="gray">
           <Text>{publication.author}</Text>
